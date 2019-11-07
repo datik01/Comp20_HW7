@@ -4,67 +4,92 @@
 	<meta charset="utf-8">
 	<title>JSON</title>
 
+	<style type="text/css">
+		
+		#form {
+    
+            margin-bottom: 200px;
+        }
+
+	</style>
+
 </head>
 
 <body>
 
-<select id="myselect" onchange="change_myselect(this.value)">
-  <option value="">Choose an option:</option>
-  <option value="Grime">Grime</option>
-  <option value="Rap">Rap</option>
-  <option value="House">House</option>
-  <option value="Hip-Hop">Hip-Hop</option>
-  <option value="EDM">EDM</option>
-</select>
+	<p id="dirty"></p>
+	<p id="clean"></p>
+	
 
-<p id="data"></p>
-<p id="form"></p>
+	<select id="select">
+		<option value="">Choose an option:</option>
+		<option value="Grime">Grime</option>
+		<option value="Rap">Rap</option>
+		<option value="House">House</option>
+		<option value="Hip-Hop">Hip-Hop</option>
+		<option value="EDM">EDM</option>
+	</select>
 
+	<input type='button' onclick="change_select(setlist)" value="Show">
 
-<script language="javascript" type="text/javascript">
+	<div id="form"></div>
+
+	<script language="javascript" type="text/javascript">
 
 		var x = "";
 
 		setlist = {
-		'song': [{"title": "Behind Barz", "artist": ["Drake"], "genre": ["Rap"], "year": 2019},
-		{"title": "Wiley Flow", "artist": ["Stormzy"], "genre": ["Grime", "Rap"], "year": 2019},
-		{"title": "Babushka Boi", "artist": ["A$AP Rocky"], "genre": ["Rap"], "year": 2019},
-		{"title": "Piece of Your Heart", "artist": ["Meduza", "Goodboys"], "genre": ["House"], "year": 2019},
-		{"title": "Blood Brother", "artist": ["Zeds Dead"], "genre": ["EDM"], "year": 2017},
-		{"title": "Better Not", "artist": ["Louis The Child"], "genre": ["EDM"], "year": 2018},
-		{"title": "Major", "artist": ["Young Dolph", "Key Glock"], "genre": ["Rap"], "year": 2019},
-		{"title": "UGLY", "artist": ["Trinidad James"], "genre": ["Hip-Hop", "Rap"], "year": 2019},
-		{"title": "Mad Luv", "artist": ["Future"], "genre": ["Hip-Hop", "Rap"], "year": 2014},
-		{"title": "Adam & Eve", "artist": ["Calboy"], "genre": ["Rap"], "year": 2019},
-		]
+			'song': [{"title": "Behind Barz", "artist": ["Drake"], "genre": ["Rap"], "year": 2019},
+			{"title": "Wiley Flow", "artist": ["Stormzy"], "genre": ["Grime", "Rap"], "year": 2019},
+			{"title": "Babushka Boi", "artist": ["A$AP Rocky"], "genre": ["Rap"], "year": 2019},
+			{"title": "Piece of Your Heart", "artist": ["Meduza", "Goodboys"], "genre": ["House"], "year": 2019},
+			{"title": "Blood Brother", "artist": ["Zeds Dead"], "genre": ["EDM"], "year": 2017},
+			{"title": "Better Not", "artist": ["Louis The Child"], "genre": ["EDM"], "year": 2018},
+			{"title": "Major", "artist": ["Young Dolph", "Key Glock"], "genre": ["Rap"], "year": 2019},
+			{"title": "UGLY", "artist": ["Trinidad James"], "genre": ["Hip-Hop", "Rap"], "year": 2019},
+			{"title": "Mad Luv", "artist": ["Future"], "genre": ["Hip-Hop", "Rap"], "year": 2014},
+			{"title": "Adam & Eve", "artist": ["Calboy"], "genre": ["Rap"], "year": 2019},
+			]
 		}	
 
 
 		var myJSON = JSON.stringify(setlist);
-		document.write (myJSON + "<br>" + "<br>");
+		document.getElementById("dirty").innerHTML = myJSON + "<br>";
 
 		for (var i in setlist.song) {
-  			x += "<h2>" + setlist.song[i].title + "</h2>";
-  			
-    		if (setlist.song[i].artist.length == 1)
-    			x += "Artist: " + setlist.song[i].artist + "<br>";
-    		else
-    			x += "Artists: " + setlist.song[i].artist[0] + " and " + setlist.song[i].artist[1] + "<br>";
-    			
-    		if (setlist.song[i].genre.length == 1)
-    			x += "Genre: " + setlist.song[i].genre + "<br>";
-    		else
-    			x += "Genres: " + setlist.song[i].genre[0] + " and " + setlist.song[i].genre[1] + "<br>";
+			x += "<h2>" + setlist.song[i].title + "</h2>";
 
-    		x += "Year: " + setlist.song[i].year + "<br>";
-    			
+			if (setlist.song[i].artist.length == 1)
+				x += "Artist: " + setlist.song[i].artist + "<br>";
+			else
+				x += "Artists: " + setlist.song[i].artist[0] + " and " + setlist.song[i].artist[1] + "<br>";
+
+			if (setlist.song[i].genre.length == 1)
+				x += "Genre: " + setlist.song[i].genre + "<br>";
+			else
+				x += "Genres: " + setlist.song[i].genre[0] + " and " + setlist.song[i].genre[1] + "<br>";
+
+			x += "Year: " + setlist.song[i].year + "<br>";
+
 		}
 		
-		document.getElementById("data").innerHTML = x;
+		document.getElementById("clean").innerHTML = x;
 
-		
-		
+		function change_select(setlist) {
+			var x, txt = "";
+			val1 = document.getElementById("select");
+			selected = val1.value;
+			txt += "<h2> Songs: </h2>";
+			for (x in setlist.song) {
+				if (setlist.song[x].genre[0]==selected || setlist.song[x].genre[1]==selected)
+					txt += setlist.song[x].title + "<br>";
+			}
+			document.getElementById("form").innerHTML = txt;	
+		};
+
 
 	</script>
+
+	
 </body>
 </html>
